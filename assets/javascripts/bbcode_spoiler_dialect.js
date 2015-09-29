@@ -57,15 +57,20 @@
           inner = blockContents.join("\n\n"),
           innerTree = parser.toHTMLTree(inner, "Discourse");
 
-      if (!label) {
-          opts.usingDefaultLabel = true;
-          label = Discourse.SiteSettings.spoiler_default_label;
-      }
+      if ( Discourse.User.current() ) {
 
-      if (!innerTree || innerTree.length === 0 || innerTree[0] != 'html') { // uh?
-          return generateJsonML(label, inner, opts);
-      }
-      return generateJsonML(label, innerTree.slice(1), opts);
+        if (!label) {
+            opts.usingDefaultLabel = true;
+            label = Discourse.SiteSettings.spoiler_default_label;
+        }
+
+        if (!innerTree || innerTree.length === 0 || innerTree[0] != 'html') { // uh?
+            return generateJsonML(label, inner, opts);
+        }
+        
+        return generateJsonML(label, innerTree.slice(1), opts);
+        
+      } 
     }
   });
 
