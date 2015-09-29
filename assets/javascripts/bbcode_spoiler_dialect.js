@@ -57,7 +57,7 @@
           inner = blockContents.join("\n\n"),
           innerTree = parser.toHTMLTree(inner, "Discourse");
 
-      if ( Discourse.User.current() ) {
+      if ( Discourse.User.current() === "object" ) {
 
         if (!label) {
             opts.usingDefaultLabel = true;
@@ -69,8 +69,10 @@
         }
         
         return generateJsonML(label, innerTree.slice(1), opts);
-        
-      } 
+
+      } else {
+        return '<div class="">You need to login to view this code snippet.</div>'
+      }
     }
   });
 
