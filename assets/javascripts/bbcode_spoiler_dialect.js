@@ -82,10 +82,4 @@
   Discourse.Markdown.whiteListTag('label', 'data-suffix', /^(yes|no)$/);
 })();
 
-$(document).ready(function(){
-     if(  $('.ember-view').hasClass('current-user') ) {
-     } else {
-        $('.spoilerrific > div').html('<div class="login-to-view"><p>You must be logged in to view this code snippet.</p><a href="/signup" class="primary btn-small sign-up-button btn">Sign Up</a></div>');
-     }
-});
 
