@@ -45,8 +45,8 @@
   //Discourse.BBCode.register('spoiler', {noWrap: true}, emitter);
 
   Discourse.Dialect.replaceBlock({
-    start: /\[hide_blocks(=[^\[\]]+)?\]([\s\S]*)/igm,
-    stop: /\[\/hide_blocks\]/igm,
+    start: /\[spoiler1(=[^\[\]]+)?\]([\s\S]*)/igm,
+    stop: /\[\/spoiler1\]/igm,
     rawContents: true, // this is documented, but doesn't seem to do anything
     emitter: function(blockContents, matches) {
       var params = matches[1] ? matches[1].replace(/^=/g, '') : '',
@@ -65,9 +65,7 @@
       if (!innerTree || innerTree.length === 0 || innerTree[0] != 'html') { // uh?
           return generateJsonML(label, inner, opts);
       }
-      if ( Discourse.User.current() === null ) {
-        return generateJsonML(label, innerTree.slice(1), opts);
-      } 
+      return generateJsonML(label, innerTree.slice(1), opts);
     }
   });
 
