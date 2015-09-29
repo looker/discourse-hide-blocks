@@ -57,22 +57,18 @@
           inner = blockContents.join("\n\n"),
           innerTree = parser.toHTMLTree(inner, "Discourse");
 
-      if ( Discourse.User.current() === "object" ) {
 
-        if (!label) {
-            opts.usingDefaultLabel = true;
-            label = Discourse.SiteSettings.spoiler_default_label;
-        }
-
-        if (!innerTree || innerTree.length === 0 || innerTree[0] != 'html') { // uh?
-            return generateJsonML(label, inner, opts);
-        }
-        
-        return generateJsonML(label, innerTree.slice(1), opts);
-
-      } else {
-        return '<div class="">You need to login to view this code snippet.</div>'
+      if (!label) {
+          opts.usingDefaultLabel = true;
+          label = Discourse.SiteSettings.spoiler_default_label;
       }
+
+      if (!innerTree || innerTree.length === 0 || innerTree[0] != 'html') { // uh?
+          return generateJsonML(label, inner, opts);
+      }
+      
+        return generateJsonML(label, innerTree.slice(1), opts);
+      } 
     }
   });
 
@@ -85,3 +81,11 @@
   Discourse.Markdown.whiteListTag('label', 'data-prefix', /^(yes|no)$/);
   Discourse.Markdown.whiteListTag('label', 'data-suffix', /^(yes|no)$/);
 })();
+
+$(document).ready(function(){
+     if(  $('.ember-view').hasClass('current-user') ) {
+     } else {
+        $('.spoilerrific > div').html('<div class="login-to-view"><p>You must be logged in to view this code snippet.</p><a href="/signup" class="primary btn-small sign-up-button btn">Sign Up</a></div>');
+     }
+});
+
