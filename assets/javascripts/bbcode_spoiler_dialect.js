@@ -17,17 +17,35 @@
   function generateJsonML (label, contents, opts) {
     var myId = 'spoilerrific-' + generateUniqueishIdentifier();
 
-    var wrappingDiv = ['div'].concat(contents);
+    var loginButton = '<a href="<%= path "/login"%>" class="btn btn-primary btn-small login-button"><i class="fa fa-user"></i> <%= I18n.t("log_in") %></a>';
 
-    return [
-      'div', { 'class': 'spoilerrific', 'data-prefix': opts.usingDefaultLabel ? 'yes' : 'no', 'data-suffix': opts.usingDefaultLabel ? 'no' : 'yes' },
-      [
-        'input', { 'type': 'checkbox', 'id': myId }
+    var wrappingDiv = ['div class="show-logged-in"'].concat(contents);
+
+    return ['div', 
+      { 'class': 'spoilerrific', 'data-prefix': opts.usingDefaultLabel ? 'yes' : 'no', 'data-suffix': opts.usingDefaultLabel ? 'no' : 'yes' },
+      ['input', 
+        { 'type': 'checkbox', 'id': myId }
       ],
-      [
-        'label', { 'for': myId }, label
+      ['label', 
+        { 'for': myId }, label
       ],
-      wrappingDiv
+      wrappingDiv,
+      ['div', 
+        { 'class': 'hide-logged-out'}, 'You must have an account to view this. <br>',
+        ['button',
+          { 'onclick': 'Discourse.__container__.lookup("router:main").send("showCreateAccount");', 'class': 'btn btn-primary login-button'},
+          ['i', 
+          { 'class': 'fa'} ]
+          , 'Sign Up'
+          
+        ],
+        ['button',
+          { 'onclick': 'Discourse.__container__.lookup("router:main").send("showLogin");', 'class': 'btn btn-primary login-button'},
+          ['i', 
+          { 'class': 'fa fa-user'} ]
+          , ' Log In'
+        ]
+      ]
     ];
   }
 
@@ -71,7 +89,13 @@
   });
 
   var spoilerrificRe = /^spoilerrific-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  Discourse.Markdown.whiteListTag('button', 'class', 'btn btn-primary login-button');
+  Discourse.Markdown.whiteListTag('button', 'onclick', 'Discourse.__container__.lookup("router:main").send("showCreateAccount");');
+  Discourse.Markdown.whiteListTag('button', 'onclick', 'Discourse.__container__.lookup("router:main").send("showLogin");');
+  Discourse.Markdown.whiteListTag('i', 'class', 'fa fa-user');
   Discourse.Markdown.whiteListTag('div', 'class', 'spoilerrific');
+  Discourse.Markdown.whiteListTag('div', 'class', 'show-logged-in');
+  Discourse.Markdown.whiteListTag('div', 'class', 'hide-logged-out');
   Discourse.Markdown.whiteListTag('input', 'type', 'checkbox');
   Discourse.Markdown.whiteListTag('input', 'checked', 'checked');
   Discourse.Markdown.whiteListTag('input', 'id', spoilerrificRe);
