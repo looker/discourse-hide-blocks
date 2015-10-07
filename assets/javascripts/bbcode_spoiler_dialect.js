@@ -31,7 +31,7 @@
       ],
       wrappingDiv,
       ['div', 
-        { 'class': 'hide-logged-out'}, 'You must have an account to view this. <br>',
+        { 'class': 'hide-logged-out'}, 'Log in to learn more <br>',
         ['button',
           { 'onclick': 'Discourse.__container__.lookup("router:main").send("showCreateAccount");', 'class': 'btn btn-primary login-button'},
           ['i', 
