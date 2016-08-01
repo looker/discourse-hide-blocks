@@ -1,7 +1,7 @@
 export default {
   name: 'userStatus',
   initialize() {
-  	var userStatus = Discourse.User.current()
+  	var userStatus = Discourse.User.current();
     if ( userStatus ) {
     	$('body').addClass('logged-in');
     } else {
