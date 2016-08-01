@@ -1,3 +1,6 @@
 en:
-  site_settings:
-    spoiler_default_label: "Default text for spoiler show/hide button."
+  js:
+    spoiler:
+      title: Blur Spoiler
+    composer:
+      spoiler_text: "This text will be blurred"

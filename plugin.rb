@@ -1,23 +1,24 @@
-# name: discourse-bbcode-spoiler
-# about: A Discourse plugin to support block-style spoiler tags.
-# version: 0.1
-# authors: Luke Granger-Brown
+# name: Spoiler Alert!
+# about: Uses the Spoiler Alert plugin to blur text when spoiling it.
+# version: 0.3
+# authors: Robin Ward, Regis Hanol
+# url: https://github.com/discourse/discourse-spoiler-alert
 
-PLUGIN_NAME ||= "discourse_bbcode_spoiler".freeze
+enabled_site_setting :spoiler_enabled
 
-register_asset "javascripts/bbcode_spoiler_dialect.js", :server_side
-register_asset "stylesheets/spoilerrific.css"
+register_asset "javascripts/spoiler.js"
+register_asset "javascripts/spoiler_dialect.js", :server_side
+
+register_asset "stylesheets/discourse_spoiler_alert.css"
 
 after_initialize do
 
+  # black out spoilers in emails
   Email::Styles.register_plugin_style do |fragment|
-  	# We don't want to show the spoiler in emails, nor do we want to include their content
-  	# so we strip out everything except the "button"
-    fragment.css('.spoilerrific').each do |i|
-      label = i.elements.css("label").first
-      new_node = i.replace "<div style=\"display: block;padding: 10px;background-color: gray;color: white;margin-bottom: 10px;\">Spoiler: <span style=\"font-weight: bold;\"></span> (view post to open!)</div>"
-      label_span = new_node.css("span").first
-      label_span.prepend_child label.children
+    if SiteSetting.spoiler_enabled
+      fragment.css(".spoiler").each do |spoiler|
+        spoiler["style"] = "color:\#000;background-color:\#000;"
+      end
     end
   end
 

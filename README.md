@@ -1,17 +1,22 @@
-discourse-bbcode-spoiler
-========================
+discourse-spoiler-alert
+=======================
 
-A Discourse Plugin to support "conventional" block-style spoiler tags.
+Spoiler plugin for [Discourse](http://discourse.org) highly inspired by the [spoiler-alert](http://joshbuddy.github.io/spoiler-alert/) jQuery plugin.
 
 Usage
 =====
 
-In your posts, surround text with `[spoiler]` and `[/spoiler]`. If you want to specify text for the button that isn't "Click for FLARD", then you can do so by using `[spoiler=Less FLARD]`.
+In your posts, surround text or images with `[spoiler]` ... `[/spoiler]`.
+For example:
+
+```
+   I watched the murder mystery on TV last night. [spoiler]The butler did it[/spoiler].
+```
 
 Installation
 ============
 
-* Add the plugin's repo url to your container's yml config file
+* Add the plugin's repo url to your container's `app.yml` file
 
 ```yml
 hooks:
@@ -21,18 +26,17 @@ hooks:
         cmd:
           - mkdir -p plugins
           - git clone https://github.com/discourse/docker_manager.git
-          - git clone https://github.com/lukegb/discourse-bbcode-spoiler.git
+          - git clone https://github.com/discourse/discourse-spoiler-alert.git
 ```
 
 * Rebuild the container
 
 ```
-cd /var/docker
+cd /var/discourse
 git pull
 ./launcher rebuild app
 ```
 
 License
 =======
-
 MIT
